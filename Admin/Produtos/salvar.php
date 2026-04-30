@@ -10,18 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $quantidade = $_POST["quantidade"];
 
     // 3. Prepara o comando SQL (usando prepared statements para segurança)
-    $sql = "INSERT INTO produtos (nome, preco, descricao, quantidade) VALUES (:nome, :preco, :descricao, :quantidade)";
+    $sql = "INSERT INTO produtos (nome, preco, descricao) VALUES (:nome, :preco, :descricao, :quantidade)";
     $stmt = $pdo->prepare($sql);
 
     // 4. Executa o comando passando os valores
-try {
+    try {
         $stmt->execute([
-            ':nome'       => $nome,
-            ':preco'      => $preco,
-            ':descricao'  => $descricao,
-            ':quantidade' => $quantidade,
+            ':nome' => $nome,
+            ':preco' => $preco,
+            ':descricao' => $descricao,
+            ':quantidade' => $quantidade
         ]);
-
         $mensagem = "Produto cadastrado com sucesso!";
     } catch (PDOException $e) {
         $mensagem = "Erro ao cadastrar produto: " . $e->getMessage();
